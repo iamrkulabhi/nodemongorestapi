@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const env = require("dotenv").config()
 
 const authRouter = require("./Routes/auth")
+const postRouter = require("./Routes/post");
 
 const app = express()
 const APPPORT = process.env.APP_PORT
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
     next()
 })
 app.use("/auth", authRouter)
+app.use("/post", postRouter);
 
 app.use((error, req, res, next) => {
     if(error){
@@ -36,7 +38,7 @@ mongoose.connect(DATABASE_CONNECTION_URI).then(
         })
     }
 ).catch(
-    err => {
+    err => {    
         console.log(err)
     }
 )
