@@ -25,14 +25,29 @@ const createPostHandler = (req, res, next) => {
 };
 
 const updatePostHandler = (req, res, next) => {
+    vh.handleValidation(req);
+    const _postId = req.params.postId;
 
+    PostModel.updateOne({_id: _postId}, req.body).then(post => {
+        res.status(200).json({success: true, data: post});
+    }).catch(err => {
+        next(err);
+    });
 };
 
 const deletePostHandler = (req, res, next) => {
-
+    vh.handleValidation(req);
+    const _postId = req.params.postId;
+    
+    PostModel.deleteOne({_id: _postId}).then(post => {
+        res.status(200).json({success: true, data: post});
+    }).catch(err => {
+        next(err);
+    });
 };
 
 const showPostHandler = (req, res, next) => {
+    vh.handleValidation(req);
     const _postId = req.params.postId;
 
     if(_postId){
