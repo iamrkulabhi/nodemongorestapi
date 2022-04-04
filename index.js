@@ -6,7 +6,7 @@ const authRouter = require("./Routes/auth")
 const postRouter = require("./Routes/post");
 
 const app = express()
-const APPPORT = process.env.APP_PORT
+const APPPORT = process.env.APP_PORT || 3000;
 const DATABASE_CONNECTION_URI=`mongodb+srv://${process.env.APP_MONGODB_USERNAME}:${process.env.APP_MONGODB_PASSWORD}@cluster0.icvf0.mongodb.net/${process.env.APP_MONGODB_DATABASE}?retryWrites=true&w=majority`;
 
 
