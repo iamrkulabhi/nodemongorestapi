@@ -9,12 +9,14 @@ const createPostHandler = (req, res, next) => {
     const _desc = req.body.description;
     const _status = req.body.status ? req.body.status : 'inactive';
     const _user = req.user;
+    const _attachments = req.body.attachments;
 
     const post = new PostModel({
         title: _title,
         description: _desc,
         status: _status,
-        createdBy: _user
+        createdBy: _user,
+        attachments: _attachments
     });
 
     post.save().then(post => {
@@ -51,11 +53,17 @@ const showPostHandler = (req, res, next) => {
     const _postId = req.params.postId;
 
     if(_postId){
-        PostModel.findById(_postId).populate("createdBy", "username email").then(posts => {
+        PostModel.findById(_postId)
+        .populate("createdBy", "username email")
+        .populate("attachments")
+        .then(posts => {
             res.status(200).json({success: true, data: posts});
         }).catch(err => next(err));
     }else{
-        PostModel.find({}).populate("createdBy", "username email").then(posts => {
+        PostModel.find({})
+        .populate("createdBy", "username email")
+        .populate("attachments")
+        .then(posts => {
             res.status(200).json({success: true, data: posts});
         }).catch(err => next(err));
     }

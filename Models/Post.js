@@ -13,6 +13,13 @@ const postSchema = new Schema({
         enum: ['active', 'inactive'],
         default: 'inactive'
     },
+    attachments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Attachment',
+            default: null
+        }
+    ],
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: 'User'
